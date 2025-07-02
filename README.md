@@ -179,5 +179,4 @@ Helm is a package manager for Kubernetes. It uses "charts" (like templates) to d
 - `.helmignore`: Patterns to exclude from the chart package.
 
 ---
-
 For more details, see the comments in your Jenkinsfile and Helm chart files, or ask for specific examples!
