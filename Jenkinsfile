@@ -15,8 +15,7 @@ pipeline {
                 sleep 6
                 '''
                 }
-            }
-            
+            }            
         }
         stage('Docker run'){ // run container from our builded image
                 steps {
