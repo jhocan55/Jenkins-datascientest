@@ -75,7 +75,6 @@ stage('Deploiement en dev'){
                 '''
                 }
             }
-
         }
 stage('Deploiement en staging'){
         environment
