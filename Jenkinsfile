@@ -16,6 +16,7 @@ pipeline {
                 '''
                 }
             }
+            
         }
         stage('Docker run'){ // run container from our builded image
                 steps {
