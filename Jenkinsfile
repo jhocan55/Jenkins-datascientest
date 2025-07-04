@@ -6,16 +6,24 @@ pipeline {
     }
     agent any // Jenkins will be able to select all available agents
     stages {
-        stage(' Docker Build'){ // docker build image stage
+        stage(' Docker Build') {
             steps {
                 script {
                 sh '''
-                 docker rm -f jenkins
-                 docker build -t $DOCKER_ID/$DOCKER_IMAGE:$DOCKER_TAG .
-                sleep 6
+                    echo "===== CLEANUP OLD CONTAINERS ====="
+                    # remove any leftover 'jenkins' container
+                    docker rm -f jenkins || true
+
+                    # remove any containers from previous compose runs
+                    docker ps -aq --filter "name=datascientest-ci-cd-exam" \
+                    | xargs -r docker rm -f || true
+
+                    echo "===== BUILD NEW IMAGE ====="
+                    docker build -t $DOCKER_ID/$DOCKER_IMAGE:$DOCKER_TAG .
+                    sleep 6
                 '''
                 }
-            }            
+            }
         }
         stage('Docker run'){ // run container from our builded image
                 steps {
@@ -26,7 +34,7 @@ pipeline {
                     '''
                     }
                 }
-            }
+        }
 
         stage('Test Acceptance'){ // we launch the curl command to validate that the container responds to the request
             steps {
